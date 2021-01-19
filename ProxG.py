@@ -4,8 +4,8 @@
 import numpy as np
 
 
-def ProxG(D, W2, delta, lambda_N):
-    d_delta = D + W2 / delta
+def prox_G(D, Z2, delta, lambda_N):
+    d_delta = D + Z2 / delta
     d_delta = (d_delta + d_delta.T) / 2  # czemu tutaj to robimy ? wiem że symetryczy ale czy coś nas to kosztuje ?
     U, S, Vt = np.linalg.svd(d_delta)  # Ddelta = U*diag(S)*Vt
     diagS = np.diag(S)
@@ -17,8 +17,8 @@ def ProxG(D, W2, delta, lambda_N):
 
 if __name__=="__main__":
     D = np.random.randint(0, 10, size=(5, 5))
-    W2 = np.ones((5, 5)) - np.eye(5)
+    Z2 = np.ones((5, 5)) - np.eye(5)
     delta = 0.5
     lambda_n = 2.5
-    c_new = ProxG(D, W2, delta, lambda_n)
+    c_new = prox_G(D, Z2, delta, lambda_n)
     print(c_new)
