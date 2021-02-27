@@ -2,7 +2,7 @@ import numpy as np
 
 
 # stworzenie macierzy  AA czyli wielu macierzy w jednej.
-n = 10
+n = 20
 p = 5
 np.random.seed(2021)
 AA = np.random.randint(0, 10, size=(n, p, p))
@@ -11,7 +11,7 @@ for nr, matrix in enumerate(AA):
     np.fill_diagonal(matrix, 0)
     AA[nr, :, :] = (AA[nr, :, :] + AA[nr, :, :].T) / 2
 
-AA.shape  # (10, 5, 5) (n, p, p)
+AA.shape  # (20, 5, 5) (n, p, p)
 # do tego momentu wszystkie pojedyńcze macierze w A są symetryczne i mają 0 na przekątnych
 
 ##########
@@ -33,7 +33,7 @@ ytilde = H @ y
 ##############Convert the [p, p, n] array into a (p^2-p)/2-by-n matrix
 ##############
 Avecs = AAtilde.reshape(n,-1)
-#Avecs.shape 10x25
+#Avecs.shape 20x25
 upper_diagonal = np.triu(np.ones((p,p)),1).reshape(p**2,-1) # to ma [(p-1)p]/2
 """To jest bardzo sprytne, generalnie np.triu(np.ones((p,p)),1) dostaje macierz górnotrójkątną z 1 , 
 tak naprawdę chce dostać tylko te kolumny uformowane z macierzy AA w których są te wartości z górnego trójkąta. Teraz 
@@ -46,15 +46,14 @@ AvecsUP = 2 * Avecs[:,idxs] # Avecs to teraz macierz gdzie w wierszach są pacj�
 # Economy-size SVD
 U, S, Vt = np.linalg.svd(AvecsUP)  # U is (p^2-p)/2-by-n, S is n-by-n, V is n-by-n.
 Sdiag = np.diag(S)
-np.allclose(AvecsUP, U @ Sdiag @ Vt)
-
+np.allclose(AvecsUP, U[:,:Sdiag.shape[0]] @ Sdiag @ Vt)
 
 #########
 ######### SVD objects
 #########
 
 SVDAx = {}
-SVDAx["U"] = U
+SVDAx["U"] = U[:,:Sdiag.shape[0]] # czy tutaj zapisuje to co nie mnożymy przez 0 ?
 SVDAx["Sdiag"] = Sdiag
 SVDAx["Vt"] = Vt
 SVDAx["idxs"]  = idxs

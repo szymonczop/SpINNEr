@@ -56,13 +56,13 @@ def prox_fsvd(y, SVDAx, D_k, Z_k, delta):
 ##### TUTAJ SPORO RZECZY JEST ZAŁOŻONYCH Z GÓRY NIE WIEM CZY TAK POWINNO BYć
 ##### Z_K i D_K są symetryczne z zerami na przekątnej
 #if __name__=="__main__":
-n = 10
+n = 20
 y = np.random.rand(n)
-Z_k = np.random.randint(0, 10, size=(5, 5))
+Z_k = np.random.randint(0, 10, size=(p, p))
 Z_k = (Z_k + Z_k.T) / 2
 np.fill_diagonal(Z_k, 0)
 delta = 2
-D_k = np.random.randint(0, 10, size=(5, 5))
+D_k = np.random.randint(0, 10, size=(p, p))
 D_k = (D_k + D_k.T) / 2
 np.fill_diagonal(D_k, 0)
 
