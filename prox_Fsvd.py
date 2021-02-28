@@ -16,7 +16,12 @@ import numpy as np
 
 
 # argmin_B {  sum_i (y_i - <A_i, B>)^2 + delta || B - Dk - Wk/delta ||_F^2  }
-def prox_fsvd(y, SVDAx, D_k, Z_k, delta):
+
+###################
+
+
+def prox_fsvd( SVDAx, D_k, Z_k, delta):
+
     p = Z_k.shape[0]
 
     AU = SVDAx["U"]
@@ -27,43 +32,37 @@ def prox_fsvd(y, SVDAx, D_k, Z_k, delta):
     Ddelta = D_k + Z_k / delta
     DdeltaVec = Ddelta.reshape(p ** 2, -1)
     DdeltaVecU = DdeltaVec[idxs_F]
-    # Mdelta = AU.T @ DdeltaVecU * ASdiag
-    # #ySubs = AVt.T @ Mdelta
-    ySubs = AU @ ASdiag @ AVt @ DdeltaVecU
-    ydelta = y - ySubs.reshape(len(y), )
+    Mdelta = AU.T @ DdeltaVecU.reshape(-1) *ASdiag
+    ySubs = AVt.T @ Mdelta
+    ydelta = y - ySubs
 
-    right_side = AU.T @ ydelta
-    middle = np.diagonal(ASdiag) / (np.diagonal(ASdiag) ** 2 + 2 * delta)
-    BridgeVec = AVt.T @ (middle * right_side)
-    # Ridge solution from SVD
-    # AVty       = AVt @ ydelta
-    # MAVty      = (AVty*ASdiag)/(ASdiag**2 + 2*delta)# element-wise
-    # BridgeVec  = AU * MAVty
+    ##Ridge solution from SVD
+    Avty = AVt @ ydelta
+    MAVty = (Avty * ASdiag)/ (ASdiag**2 + 2*delta)
+    BridgeVec = AU @ MAVty
 
-    # RECONSTRUCT THE SYMMETRIC MATRIX
-    Bridge = np.zeros(p ** 2)
+    # Reconstruct the symmetric matrix
+    Bridge = np.zeros(p**2)
     Bridge[idxs_F] = BridgeVec
-    Bridge = Bridge.reshape(p, p)
-    Bridge = Bridge + Bridge.T
+    Bridge = Bridge.reshape(p,p)
+    Bridge = (Bridge + Bridge.T)
 
-    # B UPDATE
-
-    Bnew = Bridge + Ddelta  # POWRÓT Z BETA_FALKA DO BETA
+    Bnew = Bridge + Ddelta
 
     return Bnew
 
+delta = 100
 
-##### TUTAJ SPORO RZECZY JEST ZAŁOŻONYCH Z GÓRY NIE WIEM CZY TAK POWINNO BYć
-##### Z_K i D_K są symetryczne z zerami na przekątnej
-#if __name__=="__main__":
-n = 20
-y = np.random.rand(n)
-Z_k = np.random.randint(0, 10, size=(p, p))
-Z_k = (Z_k + Z_k.T) / 2
-np.fill_diagonal(Z_k, 0)
-delta = 2
-D_k = np.random.randint(0, 10, size=(p, p))
-D_k = (D_k + D_k.T) / 2
-np.fill_diagonal(D_k, 0)
+np.random.seed(2021)
+D_k = np.random.randn(5,5)
+D_k = (D_k + D_k.T)/2
+D_k = D_k - np.diag(np.diag(D_k))
+D_k
 
-prox_fsvd(y, SVDAx, D_k, Z_k, delta)
+np.random.seed(2020)
+Z_k = np.random.randn(5,5)
+Z_k = (Z_k + W_k.T)/2
+Z_k = Z_k - np.diag(np.diag(Z_k))
+Z_k
+
+prox_fsvd( SVDAx, D_k, Z_k, delta)
