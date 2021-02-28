@@ -20,7 +20,7 @@ import numpy as np
 ###################
 
 
-def prox_fsvd( SVDAx, D_k, Z_k, delta):
+def prox_fsvd(y, SVDAx, D_k, Z_k, delta):
 
     p = Z_k.shape[0]
 
@@ -65,4 +65,4 @@ Z_k = (Z_k + W_k.T)/2
 Z_k = Z_k - np.diag(np.diag(Z_k))
 Z_k
 
-prox_fsvd( SVDAx, D_k, Z_k, delta)
+prox_fsvd(y, SVDAx, D_k, Z_k, delta)
