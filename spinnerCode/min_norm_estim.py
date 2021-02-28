@@ -12,7 +12,7 @@ def calc_min_norm_estim(y, SVDAx):
     idxs   = SVDAx["idxs"]
 
     #Estimate
-    Vty  = Vt @ y * np.diag(Sdiag)
+    Vty  = Vt @ y /Sdiag
     Bvec = U@Vty
     Bestim  = np.zeros(p**2)
     Bestim[idxs] = Bvec
@@ -23,5 +23,11 @@ def calc_min_norm_estim(y, SVDAx):
     return Bestim
 
 calc_min_norm_estim(y, SVDAx)
+
+
+
+
+
+
 
 
