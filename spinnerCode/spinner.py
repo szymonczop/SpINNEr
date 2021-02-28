@@ -23,7 +23,18 @@ AA.shape  # (20, 5, 5) (n, p, p)
 # do tego momentu wszystkie pojedyńcze macierze w A są symetryczne i mają 0 na przekątnych
 
 
+# chcecking symmetricity
 
+for matrix in AA:
+    if not np.allclose(matrix, matrix.T):
+        print("One of A_i matrix is not symmetric")
+
+    if np.diag(matrix).sum()>0:
+        print("One of A_i has non zero value on diagonal")
+
+# checking if X was provided
+
+#To muszę dorobić
 
 ##########
 ########## get rid of X from the optimization problem
