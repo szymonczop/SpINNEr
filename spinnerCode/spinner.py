@@ -71,16 +71,24 @@ print(f"U shape{U.shape}, S shape {S.shape}, Vt shape {Vt.shape}") # te wymiary 
 
 S = np.diag(Sdiag)
 np.allclose(AvecsUP, U[:,:Sdiag.shape[0]] @ S @ Vt[:Sdiag.shape[0],:])
+
 #########
 ######### SVD objects
 #########
-
 SVDAx = {}
 SVDAx["U"] = U[:,:S.shape[0]] # czy tutaj zapisuje to co nie mnożymy przez 0 ?
 middle_product = U[:,:S.shape[0]] @ S # złożenie pierwszych 2 macierzy
 SVDAx["Sdiag"] = Sdiag
 SVDAx["Vt"] =Vt[:middle_product.shape[0],:]
 SVDAx["idxs"]  = idxs
+
+## Cases
+lambdaN = 1.2
+lambdaL = 0.9
+
+solverType = [x>0 for x in [lambdaN, lambdaL]]
+solverType = solverType[0] + 2*solverType[1] + 1
+
 
 
 
