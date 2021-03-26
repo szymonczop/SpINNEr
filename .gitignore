@@ -2,3 +2,4 @@
 spinnerCode
 __pycache__/
 .idea/
+*.m
