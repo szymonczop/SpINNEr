@@ -16,7 +16,9 @@ sNods   = size(B1,1) + size(B2,1) + size(B3,1);
 B       = blkdiag(zeros(5,5), B1, zeros(6,6), B2, zeros(7,7), B3, zeros(p - sNods - 18, p- sNods - 18));
 spinnerHeatmap(B , 'True signal')
 
-% regressor matrices 
+% regressor matrices
+rng('default')
+rng(2021)
 AA               = randn([p, p, n]);
 AA               = AA + permute(AA, [2 1 3]); % matrices are symmetric
 AA2              = reshape(AA, [p^2, n]);
