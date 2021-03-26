@@ -1,0 +1,4 @@
+*.txt
+spinnerCode
+__pycache__/
+.idea/
