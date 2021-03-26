@@ -51,18 +51,21 @@ def prox_fsvd(y, SVDAx, D_k, Z_k, delta):
 
     return Bnew
 
-delta = 100
+if __name__ == "__main__":
+# To po prostu odpalaj zaznaczając bo inaczej nie widzi teoretycznie tych zmiennych więc jak puścisz play to wywali bo
+# nie widzi części zmiennych. żeby zadziałało kiedy zaznaczasz to muszisz załadować dane ze spinner.py
+    delta = 100
 
-np.random.seed(2021)
-D_k = np.random.randn(5,5)
-D_k = (D_k + D_k.T)/2
-D_k = D_k - np.diag(np.diag(D_k))
-D_k
+    np.random.seed(2021)
+    D_k = np.random.randn(5,5)
+    D_k = (D_k + D_k.T)/2
+    D_k = D_k - np.diag(np.diag(D_k))
+    D_k
 
-np.random.seed(2020)
-Z_k = np.random.randn(5,5)
-Z_k = (Z_k + W_k.T)/2
-Z_k = Z_k - np.diag(np.diag(Z_k))
-Z_k
+    np.random.seed(2020)
+    Z_k = np.random.randn(5,5)
+    Z_k = (Z_k + Z_k.T)/2
+    Z_k = Z_k - np.diag(np.diag(Z_k))
+    Z_k
 
-prox_fsvd(y, SVDAx, D_k, Z_k, delta)
+    prox_fsvd(y, SVDAx, D_k, Z_k, delta)
