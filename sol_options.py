@@ -13,3 +13,5 @@ class Options:
     maxIters = 50000 # the maximal number of iterations; this is a stopping criterion if the algorithm does not converge
     epsPri = 1e-6 # convergence tolerance, primar residual
     epsDual = 1e-6 # convergence tolerance, dual residual
+
+
