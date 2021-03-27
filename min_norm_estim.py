@@ -22,7 +22,7 @@ def calc_min_norm_estim(y, SVDAx):
 
     return Bestim
 
-calc_min_norm_estim(y, SVDAx)
+#calc_min_norm_estim(y, SVDAx)
 
 
 
