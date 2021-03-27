@@ -97,8 +97,8 @@ def calculate_spinner_both(y, SVDAx, lambdaN, lambdaL, WGTs):
                 if sknorm > mu * np.mean([rknorm1,rknorm2]):
                     scaleStep = scaleStep/deltaDecr
 
-        delta1 = scaleStep*deltaInitial1
-        delta2 = scaleStep*ratioStep*deltaInitial2
+        delta1 = scaleStep * deltaInitial1
+        delta2 = scaleStep * ratioStep * deltaInitial2
 
         # stopping cryteria
         if ((rknormR1 < epsPri) and (rknormR2 < epsPri) and (sknormR < epsDual)):
@@ -130,7 +130,7 @@ def calculate_spinner_both(y, SVDAx, lambdaN, lambdaL, WGTs):
     return out
 
 
-final_dict = calculate_spinner_both(ytilde, SVDAx, lambdaN, lambdaL, W)
+#final_dict = calculate_spinner_both(ytilde, SVDAx, lambdaN, lambdaL, W)
 
 
 
