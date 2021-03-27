@@ -3,3 +3,4 @@ spinnerCode
 __pycache__/
 .idea/
 *.m
+plgrd.py
