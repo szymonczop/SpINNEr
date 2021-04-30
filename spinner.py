@@ -3,6 +3,7 @@ from min_norm_estim import calc_min_norm_estim
 from spinner_nuclear import calclulate_spinner_nuclear
 from spinner_lasso import calcluate_spinner_lasso
 from spinner_both import calculate_spinner_both
+import seaborn as sns
 
 
 # stworzenie macierzy  AA czyli wielu macierzy w jednej.
@@ -162,19 +163,21 @@ def calculate_spinner(y, AA, lambdaN, lambdaL, W=None, X=None):
 
 
 if __name__ == "__main__":
-    # stworzenie macierzy  AA czyli wielu macierzy w jednej.
-    n = 20
-    p = 5
+    #stworzenie macierzy  AA czyli wielu macierzy w jednej.
+    n = 100
+    p = 40
     y = np.array(
         [4.7011, 0.0157, 2.7057, -1.4226, 5.5819, -3.7481, 10.0588, 0.3313, -4.1411, 5.1575, -6.2244, -3.1968, 4.7178,
          0.6485, -5.5586, -5.9589, -2.5582, 2.5288, -0.8932, -2.6688])
+
+
 
     # macierz cech pacjetów
     np.random.seed(2021)
     X = np.random.randint(0, 20, size=(n, 7))
 
     lambdaN = 1.2
-    lambdaL = 0.9
+    lambdaL = 5
 
     # data = AA.copy()
     # with open("best_file.txt", 'w') as outfile:
@@ -187,8 +190,12 @@ if __name__ == "__main__":
     #     np.fill_diagonal(matrix, 0)
     #     AA[nr, :, :] = (AA[nr, :, :] + AA[nr, :, :].T) / 2
 
-    AA = np.loadtxt('array_file.txt')
-    AA = AA.reshape(20, 5, 5)
+    # AA = np.loadtxt('array_file.txt')
+    # AA = AA.reshape(20, 5, 5)
+    y = np.loadtxt("matrices/y_big.txt")
+    AA = np.loadtxt("matrices/AA_big.txt")
+    AA = AA.reshape(n, p, p)
 
     kappa = calculate_spinner(y, AA, lambdaN, lambdaL, X=X)
     print(kappa)
+    sns.heatmap(kappa["B"])
