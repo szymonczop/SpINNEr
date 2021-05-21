@@ -57,7 +57,7 @@ def calculate_spinner_both(y, SVDAx, lambdaN, lambdaL, WGTs):
     Dlts2    = []
 
     while True:
-        print(counterr)
+        #print(counterr)
         Bnew = prox_fsvd(y, SVDAx, Dk, W1k, delta1)
         Cnew = prox_G(Dk, W2k, delta2, lambdaN)
         Dnew = prox_H(Bnew, Cnew, delta1, delta2, W1k, W2k, lambdaL, WGTs)

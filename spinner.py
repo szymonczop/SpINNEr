@@ -75,7 +75,7 @@ def calculate_spinner(y, AA, lambdaN, lambdaL, W=None, X=None):
     ########## get rid of X from the optimization problem
     #########
 
-    H = np.eye(n) - X @ np.linalg.inv(X.T @ X) @ X.T
+    H = np.eye(n) - X @ XtXXt
     AAmatrix = AA.reshape(n, -1)
     #AAmatrix.shape # 20x25  nxp^2
     AAtilde = H @ AAmatrix
@@ -166,18 +166,19 @@ if __name__ == "__main__":
     #stworzenie macierzy  AA czyli wielu macierzy w jednej.
     n = 100
     p = 40
-    y = np.array(
-        [4.7011, 0.0157, 2.7057, -1.4226, 5.5819, -3.7481, 10.0588, 0.3313, -4.1411, 5.1575, -6.2244, -3.1968, 4.7178,
-         0.6485, -5.5586, -5.9589, -2.5582, 2.5288, -0.8932, -2.6688])
+    # y = np.array(
+    #     [4.7011, 0.0157, 2.7057, -1.4226, 5.5819, -3.7481, 10.0588, 0.3313, -4.1411, 5.1575, -6.2244, -3.1968, 4.7178,
+    #      0.6485, -5.5586, -5.9589, -2.5582, 2.5288, -0.8932, -2.6688])
 
 
 
     # macierz cech pacjetów
     np.random.seed(2021)
     X = np.random.randint(0, 20, size=(n, 7))
+    #X = np.ones((100,7))
 
-    lambdaN = 1.2
-    lambdaL = 5
+    lambdaN = 1
+    lambdaL = 1
 
     # data = AA.copy()
     # with open("best_file.txt", 'w') as outfile:
@@ -196,6 +197,12 @@ if __name__ == "__main__":
     AA = np.loadtxt("matrices/AA_big.txt")
     AA = AA.reshape(n, p, p)
 
-    kappa = calculate_spinner(y, AA, lambdaN, lambdaL, X=X)
+    lambdaN = 20.715
+    lambdaL = 3.5
+
+    #kappa = calculate_spinner(y, AA, lambdaN, lambdaL, X=X)
+    kappa = calculate_spinner(y, AA, lambdaN, lambdaL, X = X)
     print(kappa)
-    sns.heatmap(kappa["B"])
+    kappa["B"]
+    sns.heatmap(kappa["B"],center=0, vmin= -2.5, vmax = 2.5)
+    ((kappa["B"] - B) ** 2).sum()
